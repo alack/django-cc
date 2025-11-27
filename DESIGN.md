@@ -427,9 +427,138 @@ POST   /api/reviews/{id}/helpful/       # 도움됨 추가
    - Gunicorn + Nginx
    - AWS/GCP/Azure 또는 Docker 배포
 
-## 10. 다음 단계
+## 10. Django Admin 점진적 발전 전략 🎨
+
+Django Admin을 각 Phase마다 함께 발전시켜 실시간으로 데이터를 관리하고 모니터링할 수 있도록 합니다.
+
+### Phase 1: 기본 Admin 설정
+**목표**: Admin 기본 환경 구축
+- Admin 사이트 타이틀 커스터마이징
+- Superuser 생성
+- 기본 인증 설정
+
+### Phase 2: 회원 관리 Admin
+**추가 기능**:
+- CustomUser Admin 등록
+  - 회원 목록 (이메일, 가입일, 활성 상태)
+  - 검색 및 필터링 (가입일, 활성 상태)
+  - 배송지 Inline 관리
+- 관리 액션: 회원 활성화/비활성화
+- **통계 위젯**: 총 회원 수, 오늘 가입자
+
+### Phase 3: 상품 관리 Admin
+**추가 기능**:
+- Category Admin
+  - 계층 구조 표시
+  - 카테고리별 상품 수
+- Product Admin
+  - 썸네일 미리보기
+  - 가격/재고 빠른 수정 (list_editable)
+  - ProductImage Inline (다중 이미지)
+  - ProductOption Inline (색상/사이즈)
+- 관리 액션: 상품 일괄 활성화, 가격 일괄 조정
+- **통계 위젯**: 총 상품 수, 품절 상품, 카테고리별 분포
+
+### Phase 4: 장바구니 Admin
+**추가 기능**:
+- Cart Admin (읽기 전용)
+  - 장바구니 목록
+  - CartItem Inline
+- **통계 위젯**: 활성 장바구니, 평균 금액, 방치된 장바구니
+
+### Phase 5: 주문 관리 Admin
+**추가 기능**:
+- Order Admin
+  - 주문 목록 (주문번호, 주문자, 금액, 상태)
+  - 상태별 색상 구분
+  - OrderItem Inline
+  - 배송 정보 섹션
+- 관리 액션: 주문 상태 일괄 변경, 송장번호 등록
+- **통계 위젯**: 오늘 주문 수, 총 판매액, 상태별 주문 수
+
+### Phase 6: 결제 관리 Admin
+**추가 기능**:
+- Payment Admin (읽기 전용)
+  - 결제 내역 (주문번호, 결제수단, 금액, 상태)
+  - 주문 상세와 연결
+- 관리 액션: 결제 취소, 환불 처리
+- **통계 위젯**: 오늘 결제 금액, 결제 성공률, 결제수단별 통계
+
+### Phase 7: 소셜 로그인 Admin
+**추가 기능**:
+- SocialAccount Admin (allauth 기본)
+  - 연동된 소셜 계정 목록
+  - 제공자별 필터
+- CustomUser Admin 확장
+  - 소셜 계정 Inline
+  - 로그인 방법 표시
+- **통계 위젯**: 로그인 방법별 회원 수
+
+### Phase 8: 리뷰 관리 Admin
+**추가 기능**:
+- Review Admin
+  - 리뷰 목록 (상품, 작성자, 별점, 구매확인)
+  - 리뷰 이미지 Inline
+- 관리 액션: 부적절한 리뷰 숨김/삭제, 베스트 리뷰 선정
+- Product Admin 확장: 평균 별점, 리뷰 개수 표시
+- **통계 위젯**: 오늘 리뷰 수, 평균 별점, 별점 분포
+
+### Phase 9: 통합 대시보드 (Admin 강화)
+**추가 기능**:
+- **종합 대시보드**
+  - 총 판매액 (일간/주간/월간)
+  - 주문 통계 차트
+  - 회원 증가 추이
+  - 인기 상품 Top 10
+- **고급 필터 및 검색**
+  - 날짜 범위 필터
+  - 다중 조건 검색
+- **일괄 작업 액션**
+  - 엑셀 다운로드
+  - 이메일 일괄 발송
+- **권한 관리**
+  - 스태프 권한 세분화
+  - 모델별 접근 권한
+
+### Phase 10-11: 성능 및 모니터링
+**추가 기능**:
+- Admin 쿼리 최적화
+  - select_related/prefetch_related 적용
+  - 대용량 데이터 페이지네이션 개선
+- 통계 위젯 캐싱 (Redis)
+- Celery 작업 모니터링 위젯
+- Flower 대시보드 링크
+
+### Admin 커스터마이징 기술 스택
+- **django-admin-interface**: 모던한 테마 (선택사항)
+- **django-import-export**: 엑셀 import/export
+- **django-admin-rangefilter**: 날짜 범위 필터
+- **django-admin-autocomplete-filter**: 자동완성 필터
+- **Chart.js**: 통계 차트
+
+### Admin UI 개선 요소
+1. **색상 코딩**
+   - 주문 상태별 색상 (빨강/파랑/초록)
+   - 재고 부족 상품 강조
+   - 결제 실패 표시
+
+2. **인라인 편집**
+   - list_editable로 빠른 수정
+   - Inline으로 관련 데이터 함께 관리
+
+3. **검색 최적화**
+   - 자동완성 검색
+   - 다중 필드 검색
+   - 날짜 범위 필터
+
+4. **통계 시각화**
+   - Dashboard 위젯
+   - 차트 및 그래프
+   - 실시간 갱신
+
+## 11. 다음 단계
 
 1. 기술 스택 최종 확정
 2. 개발 환경 설정
 3. 기본 Django 프로젝트 생성
-4. 각 앱별 순차적 구현
+4. 각 앱별 순차적 구현 (Admin과 함께!)
