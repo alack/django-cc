@@ -37,12 +37,18 @@
 
 ---
 
+
 ## Phase 2: 회원 관리 시스템 👤
 
-### 2.1 User 모델 확장
-- [ ] CustomUser 모델 생성
-  - 이메일, 전화번호, 프로필 이미지 등
-  - provider, provider_id (소셜 로그인용)
+### 2.1 User 모델 확장 (데이터 수집 설계 반영)
+- [ ] **CustomUser 모델 생성**
+  - **기본 정보**: 이메일(ID), 이름, 전화번호, 프로필 이미지
+  - **데이터 분석용**: 성별, 생년월일 (선택 입력 대응 구조)
+  - **마케팅/약관**: 
+    - 마케팅 정보 수신 동의 여부 (`is_marketing_agreed`)
+    - 마케팅 동의 일시 (`marketing_agreed_at`)
+    - 수신 채널 선호도 (`contact_preferences` - JSONField)
+  - **소셜 연동**: provider, provider_id
 - [ ] Address 모델 생성 (배송지)
 - [ ] 마이그레이션 생성 및 적용
 
