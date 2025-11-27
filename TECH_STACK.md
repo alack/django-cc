@@ -135,6 +135,8 @@ celery>=5.3
 django-celery-beat>=2.5
 requests>=2.31
 drf-spectacular>=0.27
+pydantic>=2.0
+pydantic-settings>=2.0
 ```
 
 ### requirements/development.txt
@@ -146,12 +148,17 @@ ipython>=8.17
 black>=23.11
 flake8>=6.1
 isort>=5.12
+mypy>=1.7
+django-stubs>=4.2
+types-requests>=2.31
 pytest>=7.4
 pytest-django>=4.7
 pytest-cov>=4.1
 factory-boy>=3.3
 faker>=20.1
 flower>=2.0
+django-import-export>=3.3
+django-admin-rangefilter>=0.11
 ```
 
 ### requirements/production.txt
@@ -178,42 +185,36 @@ hiredis>=2.2
 - Nginx (리버스 프록시)
 - Supervisor 또는 systemd (프로세스 관리)
 
-## 16. 구현 우선순위
+## 16. 구현 로드맵
 
-### Phase 1: 기본 구조 (1-2주)
-1. Django 프로젝트 설정
-2. PostgreSQL 연결
-3. User 모델 확장
-4. 기본 인증 (이메일 로그인)
-5. Product, Category 모델
+자세한 Phase별 구현 계획은 **ROADMAP.md**를 참조하세요.
 
-### Phase 2: 핵심 기능 (2-3주)
-1. 상품 CRUD API
-2. 장바구니 기능
-3. 주문 시스템
-4. 기본 Admin 커스터마이징
+### 로드맵 개요
 
-### Phase 3: 결제 연동 (1-2주)
-1. PortOne/Toss 연동
-2. 결제 플로우 구현
-3. 웹훅 처리
+- **Phase 1-2**: 프로젝트 초기 설정 및 회원 관리
+  - Django 프로젝트 설정, Docker 환경 구성
+  - CustomUser 모델, 인증 시스템
+  - 회원 관리 Admin 페이지
 
-### Phase 4: 소셜 로그인 (1주)
-1. Kakao 로그인
-2. Naver 로그인
-3. Google 로그인
+- **Phase 3-5**: 상품, 장바구니, 주문
+  - Product/Category 모델 및 CRUD API
+  - 장바구니 기능 및 세션 관리
+  - 주문 시스템 및 재고 관리
 
-### Phase 5: 추가 기능 (1-2주)
-1. 리뷰 시스템
-2. 이미지 업로드 및 최적화
-3. 검색 기능
-4. 필터링
+- **Phase 6-7**: 결제 및 소셜 로그인
+  - PortOne/Toss 결제 연동
+  - Kakao, Naver, Google 소셜 로그인
 
-### Phase 6: 최적화 및 배포 (1-2주)
-1. 캐싱 구현
-2. 비동기 작업 (Celery)
-3. 테스트 작성
-4. 배포 설정
+- **Phase 8-11**: 리뷰, Admin 강화, 최적화
+  - 리뷰 시스템, 이미지 업로드
+  - Admin 통계 대시보드 및 고급 기능
+  - Redis 캐싱, Celery 비동기 작업
+
+- **Phase 12-15**: 테스트, 문서화, 배포
+  - 통합 테스트, E2E 테스트
+  - API 문서 자동화 (drf-spectacular)
+  - 보안 강화 및 프로덕션 배포
+  - 성능 최적화 및 모니터링
 
 ## 17. 개발 도구
 

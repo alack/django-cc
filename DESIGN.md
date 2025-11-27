@@ -20,11 +20,11 @@
 │  │  (Django Auth + Social Auth)           │ │
 │  └────────────────────────────────────────┘ │
 │  ┌────────────────────────────────────────┐ │
-│  │  Business Logic Layer                  │ │
-│  │  - 상품 관리                            │ │
-│  │  - 장바구니                             │ │
-│  │  - 주문 처리                            │ │
-│  │  - 결제 통합                            │ │
+│  │  Service Layer (Business Logic)        │ │
+│  │  - 상품 관리 (ProductService)           │ │
+│  │  - 장바구니 (CartService)               │ │
+│  │  - 주문 처리 (OrderService)             │ │
+│  │  - 결제 통합 (PaymentService)           │ │
 │  └────────────────────────────────────────┘ │
 └─────────────────────────────────────────────┘
                      ↓
@@ -53,30 +53,47 @@ django-ecommerce/
 ├── apps/
 │   ├── accounts/          # 회원 관리
 │   │   ├── models.py      # User 모델 확장
+│   │   ├── services.py    # 비즈니스 로직
 │   │   ├── views.py
 │   │   ├── serializers.py
+│   │   ├── schemas.py     # Pydantic 스키마
+│   │   ├── exceptions.py  # 커스텀 예외
 │   │   └── urls.py
 │   ├── products/          # 상품 관리
 │   │   ├── models.py      # Product, Category, Image
+│   │   ├── services.py    # 비즈니스 로직
 │   │   ├── views.py
 │   │   ├── serializers.py
+│   │   ├── schemas.py     # Pydantic 스키마
+│   │   ├── exceptions.py  # 커스텀 예외
 │   │   └── urls.py
 │   ├── cart/              # 장바구니
 │   │   ├── models.py      # Cart, CartItem
+│   │   ├── services.py    # 비즈니스 로직
 │   │   ├── views.py
+│   │   ├── schemas.py     # Pydantic 스키마
+│   │   ├── exceptions.py  # 커스텀 예외
 │   │   └── urls.py
 │   ├── orders/            # 주문 관리
 │   │   ├── models.py      # Order, OrderItem
+│   │   ├── services.py    # 비즈니스 로직
 │   │   ├── views.py
+│   │   ├── schemas.py     # Pydantic 스키마
+│   │   ├── exceptions.py  # 커스텀 예외
 │   │   └── urls.py
 │   ├── payments/          # 결제 처리
 │   │   ├── models.py      # Payment, Transaction
-│   │   ├── views.py
 │   │   ├── services.py    # 결제 API 통합
+│   │   ├── views.py
+│   │   ├── schemas.py     # Pydantic 스키마
+│   │   ├── exceptions.py  # 커스텀 예외
 │   │   └── urls.py
 │   └── reviews/           # 상품 리뷰
 │       ├── models.py      # Review, Rating
+│       ├── services.py    # 비즈니스 로직
 │       ├── views.py
+│       ├── schemas.py     # Pydantic 스키마
+│       ├── exceptions.py  # 커스텀 예외
 │       └── urls.py
 ├── media/                 # 업로드된 파일
 ├── static/                # 정적 파일
